@@ -38,8 +38,10 @@ class Logic:
             user_id = self.db.execute_query("SELECT id FROM game WHERE name = %s", (name,))
             return {"message": "User inserted successfully", "user_id": user_id[0][0]}
         except Exception as e:
-            print(f"ERRO insert_user: {e}")  # ← adiciona isso
-            return {"error": "Failed to insert user"}
+            print(f"ERRO insert_user: {e}")  
+            if "duplicate key value violates unique constraint" in str(e):
+                return {"error": "Já existe um usuário com esse nome."}
+            return {"error": e}
 
     def distribute_character(self):
         try:
@@ -73,3 +75,12 @@ class Logic:
             return {"characters": characters}
         except Exception as e:
             return {"error": "Failed to retrieve characters for user"}  
+        
+    def get_users(self):
+        query = "SELECT name FROM game WHERE name IS NOT NULL"
+        try:
+            results = self.db.execute_query(query)
+            users = [row[0] for row in results]
+            return {"users": users, "error": None}
+        except Exception as e:
+            return {"error": e}

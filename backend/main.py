@@ -20,6 +20,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 logic = Logic()
 
+is_game_running = False
+
 
 # ===========================
 # POST
@@ -27,6 +29,7 @@ logic = Logic()
 
 @app.post("/insert_user")
 async def insert_user(name: str):
+    print(f"Received name: {name}")  # Adicione esta linha para depuração
     return logic.insert_user(name)
 
 @app.post("/insert_characters")
@@ -44,6 +47,16 @@ async def distribute_character():
 @app.get("/user_characters/{id}")
 async def get_user_characters(id: str): 
     return logic.get_user_characters(id)
+
+@app.get("/users")
+async def get_users():
+    return logic.get_users()
+
+@app.get("/is_game_running")
+async def get_is_game_running():
+    return is_game_running
+
+
 
 
 if __name__ == "__main__":

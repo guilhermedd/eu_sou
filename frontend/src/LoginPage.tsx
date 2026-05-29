@@ -1,22 +1,27 @@
 import React from "react"
-import { useNavigate } from "react-router-dom";
 
 function LoginPage({ onLogin }) {
     const [name, setName] = React.useState('')
-    const [character, setCharacter] = React.useState('')
-    const navigate = useNavigate()
 
-    function handleLogin() {
-        onLogin({ name, character })
+    function isNameValid() {
+        return name.length > 1
     }
 
     return (
         <div>
-            <h1>Login Page</h1>
+            <h1>Tche, bem vindo(a) ao jogo <u><b>"eu sou"</b></u></h1>
+            <h2>Digite seu nome</h2>
             <form>
-                <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
-                <br />
-                <button type="button" onClick={handleLogin}>Login</button>
+                <input type="text" placeholder="Cupinxa" value={name} onChange={e => setName(e.target.value)} />
+                <br/>
+                <button 
+                    type="button" 
+                    className="btn btn-primary" 
+                    onClick={() => onLogin({ name })}
+                    disabled={!isNameValid()}
+                >
+                    Começar o jogo
+                </button>
             </form>
         </div>
     )

@@ -20,5 +20,4 @@ class DatabaseConnection:
                     return []
         except Exception as e:
             print("❌ Erro ao conectar ao banco de dados:")
-            print(e)
-            return None
+            raise Exception(e)
