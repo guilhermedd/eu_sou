@@ -1,8 +1,14 @@
 import React from "react"
+import { useNavigate } from "react-router-dom";
 
 function LoginPage({ onLogin }) {
     const [name, setName] = React.useState('')
     const [character, setCharacter] = React.useState('')
+    const navigate = useNavigate()
+
+    function handleLogin() {
+        onLogin({ name, character })
+    }
 
     return (
         <div>
@@ -10,9 +16,7 @@ function LoginPage({ onLogin }) {
             <form>
                 <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
                 <br />
-                <input type="text" placeholder="Character" value={character} onChange={e => setCharacter(e.target.value)} />
-                <br />
-                <button type="button" onClick={() => onLogin({ name, character })}>Login</button>
+                <button type="button" onClick={handleLogin}>Login</button>
             </form>
         </div>
     )
